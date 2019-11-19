@@ -1,23 +1,25 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 // base class for student and faculty classes
 class Person
 {
     private:
+
+    public:
         int ID;
         string name;
         string level;
-
-    public:
-
-
 };
 
 // student is a derived class
 class Student: public Person
 {
     private:
+
+    public:
         string major;
         double GPA;
         int advisor;
@@ -27,6 +29,8 @@ class Student: public Person
 class Faculty: public Person
 {
     private:
+
+    public:
         string department;
 
 };
