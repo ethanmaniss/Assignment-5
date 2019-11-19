@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "DoublyLinkedList.h"
 
 using namespace std;
 
@@ -32,5 +33,6 @@ class Faculty: public Person
 
     public:
         string department;
+        DoublyLinkedList<int> adviseeIds;
 
 };
