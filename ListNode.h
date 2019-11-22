@@ -4,6 +4,9 @@
 * Assignment 5
 * LinkedNode class for linked list
 */
+#ifndef LISTNODE_H
+#define LISTNODE_H
+
 #include <iostream>
 
 using namespace std;
@@ -21,6 +24,8 @@ class ListNode
         ListNode(E d);
         ~ListNode();
 };
+
+#endif
 
 template <typename E>
 ListNode<E>::ListNode() // default constructor

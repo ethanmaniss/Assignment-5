@@ -1,3 +1,6 @@
+#ifndef BST_H
+#define BST_H
+
 #include <iostream>
 #include "TreeNode.h"
 
@@ -28,6 +31,8 @@ class BST
         void recPrint(TreeNode<E> *node);
 };
 
+#endif
+
 template <typename E>
 BST<E>::BST()
 {
@@ -37,7 +42,7 @@ BST<E>::BST()
 template <typename E>
 BST<E>::~BST()
 {
-    // research this (character building)
+    delete root;
 }
 
 template <typename E>

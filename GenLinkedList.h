@@ -4,6 +4,9 @@
 * Assignment 5
 * GenLinkedList interface for doubly linked list
 */
+#ifndef GENLINKEDLIST_H
+#define GENLINKEDLIST_H
+
 #include <iostream>
 
 using namespace std;
@@ -29,3 +32,5 @@ class GenLinkedList
     virtual void printList() = 0;
     virtual unsigned int getSize() = 0;
 };
+
+#endif
