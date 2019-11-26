@@ -40,7 +40,6 @@ ListNode<E>::~ListNode() // destructor
 {
     next = NULL;
     prev = NULL;
-    delete data;
 }
 
 template <typename E>

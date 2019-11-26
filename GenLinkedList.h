@@ -8,6 +8,7 @@
 #define GENLINKEDLIST_H
 
 #include <iostream>
+#include "ListNode.h"
 
 using namespace std;
 

@@ -1,6 +1,7 @@
+#ifndef PERSON_H
+#define PERSON_H
 #include <iostream>
 #include <string>
-#include "DoublyLinkedList.h"
 
 using namespace std;
 
@@ -8,31 +9,13 @@ using namespace std;
 class Person
 {
     private:
+      int ID;
+      string name;
+      string level;
 
     public:
-        int ID;
-        string name;
-        string level;
+      Person(); // default constructor
+      Person(int ID, string n, string l);
+      ~Person();
 };
-
-// student is a derived class
-class Student: public Person
-{
-    private:
-
-    public:
-        string major;
-        double GPA;
-        int advisor;
-};
-
-// faculty is a derived class
-class Faculty: public Person
-{
-    private:
-
-    public:
-        string department;
-        DoublyLinkedList<int> adviseeIds;
-
-};
+#endif

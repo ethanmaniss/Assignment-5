@@ -18,7 +18,7 @@ class BST
 
         TreeNode<E>* search(E data);
         void insert(E data);
-        bool deleteNode(E data);
+        TreeNode<E>* deleteNode(E data);
 
         TreeNode<E>* getSuccessor(TreeNode<E> *d);
 
@@ -151,7 +151,7 @@ TreeNode<E>* BST<E>::search(E data) // for assignment 5 will have to return some
 {
     if(root == NULL)
     {
-        return false;
+        return NULL;
     }
     // we make it this far, we know the tree is not empty
     // lets attempt to find the key
@@ -168,18 +168,18 @@ TreeNode<E>* BST<E>::search(E data) // for assignment 5 will have to return some
         }
         if(current == NULL) // value is not in tree
         {
-            return false;
+            return NULL;
         }
     }
-    return true;
+    return current;
 }
 
 template <typename E>
-bool BST<E>::deleteNode(E data)
+TreeNode<E>* BST<E>::deleteNode(E data)
 {
     if(root == NULL)
     {
-        return false;
+        return NULL;
     }
     TreeNode<E> *parent = root;
     TreeNode<E> *current = root;
@@ -205,7 +205,7 @@ bool BST<E>::deleteNode(E data)
 
         if(current == NULL) // value doesn't exist
         {
-            return false;
+            return NULL;
         }
     }
     // if we make it here, we found the node to be deleted
@@ -276,7 +276,7 @@ bool BST<E>::deleteNode(E data)
         }
         successor->left = current->left;
     }
-    return true;
+    return current;
 }
 
 template <typename E>

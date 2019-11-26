@@ -4,7 +4,6 @@
 * Assignment 5
 * DoublyLinkedList template class
 */
-#include "ListNode.h"
 #include "GenLinkedList.h"
 #include <iostream>
 
