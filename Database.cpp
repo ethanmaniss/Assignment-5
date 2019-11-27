@@ -96,6 +96,10 @@ void Database::getCommand()
           break;
 
         case 8: // delete a student
+          int n; // student to be deleted id number
+          cout << "Enter student's ID number: " << endl;
+          cin >> n; // gets id number
+          
           break;
 
         case 9: // add new faculty
@@ -142,10 +146,24 @@ void Database::exit() // saves data of trees and exits
 
 void Database::deletePerson(&Person p)
 {
-  studentTree.delete(p);
+  if(studentTree.search(p) != NULL) // student is found in system
+  {
+    studentTree.delete(p); // delete student
+  }
+  else
+  {
+    cout << "This student does not exist in our system." << endl;
+  }
 }
 
 void Database::deleteFaculty(&Person f)
 {
-  facultyTree.delete(f);
+  if(facultyTree.search(f) != NULL) // faculty is found in system
+  {
+    facultyTree.delete(f); // delete faculty
+  }
+  else
+  {
+    cout << "This faculty member does not exist in our system." << endl;
+  }
 }
