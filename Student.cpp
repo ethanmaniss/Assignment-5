@@ -28,3 +28,11 @@ void Student::setAdvisor(int a)
 {
   advisor = a;
 }
+
+string Student::toString()
+{
+  string s = Person::toString() +
+            + "Major: " + major + "\n"
+            + "Advisor: " + advisor + "\n";
+  return s;
+}

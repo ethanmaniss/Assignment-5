@@ -17,5 +17,13 @@ class Person
       Person(); // default constructor
       Person(int ID, string n, string l);
       ~Person();
+
+      int getID();
+      string toString();
+
+      // operator overloaders
+      bool operator==(const Person& x);
+      bool operator<=(const Person& x);
+      bool operator>=(const Person& x);
 };
 #endif

@@ -20,6 +20,7 @@ class Faculty : public Person
 
       void addAdvisee(int a);
       void removeAdvisee(int a);
+      string toString();
 
 };
 #endif

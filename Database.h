@@ -10,8 +10,8 @@ using namespace std;
 class Database
 {
     private:
-    BST<Student>* studentTree;
-    BST<Faculty>* facultyTree;
+    BST<Student*>* studentTree;
+    BST<Faculty*>* facultyTree;
 
     public:
       Database();
@@ -19,24 +19,7 @@ class Database
 
       void start();
       void getCommand();
+      void exit();
 
 };
-
-Database::~Database()
-{
-
-}
-
-void Database::start()
-{
-
-}
-
-void getCommand()
-{
-    while(true)
-    {
-
-    }
-}
 #endif

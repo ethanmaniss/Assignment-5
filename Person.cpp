@@ -21,3 +21,30 @@ Person::~Person()
 {
 
 }
+
+int Person::getID()
+{
+  return ID;
+}
+
+string Person::toString()
+{
+  string s = "Name: " + name + "\n"
+            + "Level: " + level + "\n";
+  return s;
+}
+
+bool Person::operator==(const Person& x)
+{
+  return (this->getID() == x.ID);
+}
+
+bool Person::operator<=(const Person& x)
+{
+  return (this->getID() <= x.ID);
+}
+
+bool Person::operator>=(const Person& x)
+{
+  return (this->getID() >= x.ID);
+}

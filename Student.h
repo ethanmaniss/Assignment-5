@@ -19,5 +19,6 @@ class Student : public Person
       ~Student();
 
       void setAdvisor(int a);
+      string toString();
 };
 #endif

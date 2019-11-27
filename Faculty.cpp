@@ -7,7 +7,7 @@ Faculty::Faculty()
 {
   Person();
   department = "";
-  adviseeIDs = NULL;
+  adviseeIDs = new DoublyLinkedList<int>();
 }
 
 Faculty::Faculty(int ID, string n, string l, string d, DoublyLinkedList<int>* a)
@@ -30,4 +30,11 @@ void Faculty::addAdvisee(int a)
 void Faculty::removeAdvisee(int a)
 {
   adviseeIDs->remove(a);
+}
+
+string Faculty::toString()
+{
+  string s = Person::toString() +
+            + "Department: " + department + "\n";
+  return s;
 }
