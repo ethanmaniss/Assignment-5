@@ -83,6 +83,16 @@ void Database::getCommand()
           break;
 
         case 7: // add a new student
+          string n; // new student's name
+          cout << "Enter the name of new student: " << endl;
+          cin >> n;
+          string l; // new student's grade level
+          cout << "Enter " << n << "'s grade level: " << endl;
+          cin >> l;
+          // randomly generate new student's id
+          Person s = new Person();
+
+
           break;
 
         case 8: // delete a student
@@ -118,4 +128,24 @@ void Database::getCommand()
 void Database::exit() // saves data of trees and exits
 {
   cout << "Goodbye!" << endl;
+}
+
+void Database::addPerson(&Person p)
+{
+  studentTree.insert(p);
+}
+
+void Database::deletePerson(&Person p)
+{
+  studentTree.delete(p);
+}
+
+void Database::addFaculty(&Person f)
+{
+  facultyTree.insert(f);
+}
+
+void Database::deleteFaculty(&Person f)
+{
+  facultyTree.delete(f);
 }
