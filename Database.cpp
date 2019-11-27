@@ -90,7 +90,7 @@ void Database::getCommand()
           cout << "Enter " << n << "'s grade level: " << endl;
           cin >> l;
           // randomly generate new student's id
-          Person s = new Person(); // generate new student object
+          Student s = new Student(); // generate new student object
           studentTree.insert(s); // adds a new student object to the tree
 
           break;
@@ -99,7 +99,7 @@ void Database::getCommand()
           int n; // student to be deleted id number
           cout << "Enter student's ID number: " << endl;
           cin >> n; // gets id number
-          
+
           break;
 
         case 9: // add new faculty
@@ -144,7 +144,7 @@ void Database::exit() // saves data of trees and exits
   cout << "Goodbye!" << endl;
 }
 
-void Database::deletePerson(&Person p)
+void Database::deleteStudent(&Person p)
 {
   if(studentTree.search(p) != NULL) // student is found in system
   {
