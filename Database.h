@@ -21,9 +21,8 @@ class Database
       void getCommand();
       void exit();
 
-      void addPerson(&Person p);
+
       void deletePerson(&Person p);
-      void addFaculty(&Person f);
       void deleteFaculty(&Person f);
 
 };
