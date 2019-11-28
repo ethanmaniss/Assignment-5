@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Student::Student()
+Student::Student() // student constructor
 {
   Person();
   ID = 0;
@@ -14,7 +14,7 @@ Student::Student()
   advisor = 0;
 }
 
-Student::Student(int ID, string n, string l, double GPA, string m, int a)
+Student::Student(int ID, string n, string l, double GPA, string m, int a) // overloaded constructor
 {
   Person(ID, n, l);
   this->ID = ID;
@@ -45,7 +45,7 @@ int Student::getAdvisor()
   return advisor;
 }
 
-string Student::toString()
+string Student::toString() // prints out all info for student object
 {
   string s = "Name: " + name + "\n"
             + "ID: " + to_string(ID) + "\n"

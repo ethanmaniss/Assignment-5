@@ -35,12 +35,12 @@ string Person::toString()
   return s;
 }
 
-bool Person::operator==(const Person& x)
+bool Person::operator==(const Person& x) // compares if two ids are equivalent
 {
   return (this->getID() == x.ID);
 }
 
-bool Person::operator<=(const Person& x)
+bool Person::operator<=(const Person& x) // returns boolean true if object has a lesser id than the parameter object
 {
   return (this->getID() <= x.ID);
 }

@@ -6,8 +6,8 @@ using namespace std;
 
 Database::Database()
 {
-  studentTree = new STree();
-  facultyTree = new FTree();
+  studentTree = new STree(); // holds student objects
+  facultyTree = new FTree(); // holds faculty objects
 }
 
 Database::~Database()
@@ -18,15 +18,15 @@ Database::~Database()
 
 void Database::start() // finds binary files for trees
 {
-  getCommand();
+  getCommand(); // runs this method to start up the database
 }
 
 void Database::getCommand()
 {
     string command = "";
-    int c = 0;
+    int c = 0; // integer corresponding to command number
     bool isOn = true;
-    while(isOn)
+    while(isOn) // will keep prompting user for commands until they choose to exit
     {
       cout << endl << "Please enter number corresponding to command (enter 14 to exit)\n" << endl
             << "1: Print all students' information" << endl
@@ -47,18 +47,18 @@ void Database::getCommand()
 
       try
       {
-        c = stoi(command);
+        c = stoi(command); // string command is converted to integer
       }
       catch(invalid_argument const &e)
       {
         cout << "Error: invalid argument" << endl << endl;
-        getCommand();
+        getCommand(); // will try again
         return;
       }
       catch(out_of_range const &e)
       {
         cout << "Error: argument out of range" << endl << endl;
-        getCommand();
+        getCommand(); // will try again
         return;
       }
 
@@ -135,7 +135,7 @@ void Database::printSInfo()
 
   try
   {
-    i = stoi(r);
+    i = stoi(r); // converts user input student id from string to integer
   }
   catch(invalid_argument const &e)
   {
@@ -154,7 +154,7 @@ void Database::printSInfo()
     return;
   }
 
-  print(i, true);
+  print(i, true); // prints out student info if id is valid
 }
 
 void Database::printFInfo()
@@ -167,7 +167,7 @@ void Database::printFInfo()
 
   try
   {
-    i = stoi(r);
+    i = stoi(r); // converts user input faculty id from string to integer
   }
   catch(invalid_argument const &e)
   {
@@ -186,7 +186,7 @@ void Database::printFInfo()
     return;
   }
 
-  print(i, false);
+  print(i, false); // prints out faculty info if id is valid
 }
 
 void Database::printSAInfo() // prints student's advisor's information
@@ -322,7 +322,7 @@ void Database::addStudent()
   cin >> ad;
   try
   {
-    a = stoi(ad);
+    a = stoi(ad); // id converted from string to integer
   }
   catch(invalid_argument const &e)
   {
@@ -348,7 +348,7 @@ void Database::addStudent()
   cin >> ad;
   try
   {
-    g = stod(ad);
+    g = stod(ad); // converts gpa variable from string to double
   }
   catch(invalid_argument const &e)
   {
@@ -455,7 +455,7 @@ void Database::deleteStudent()
   cin >> r;
   try
   {
-    i = stoi(r);
+    i = stoi(r); // student id is converted from string to integer
   }
   catch(invalid_argument const &e)
   {
@@ -487,7 +487,7 @@ void Database::deleteFaculty()
   cin >> r;
   try
   {
-    i = stoi(r);
+    i = stoi(r); // converts faculty id from string to integer
   }
   catch(invalid_argument const &e)
   {

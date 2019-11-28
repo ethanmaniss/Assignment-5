@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Faculty::Faculty()
+Faculty::Faculty() // faculty constructor
 {
   Person();
   ID = 0;
@@ -14,7 +14,7 @@ Faculty::Faculty()
   adviseeIDs = new DoublyLinkedList<int>();
 }
 
-Faculty::Faculty(int ID, string n, string l, string d)
+Faculty::Faculty(int ID, string n, string l, string d) // overloaded constructor
 {
   Person(ID, n, l);
   this->ID = ID;
@@ -24,17 +24,17 @@ Faculty::Faculty(int ID, string n, string l, string d)
   adviseeIDs = new DoublyLinkedList<int>();
 }
 
-Faculty::~Faculty()
+Faculty::~Faculty() // faculty destructor
 {
   delete adviseeIDs;
 }
 
-void Faculty::addAdvisee(int a)
+void Faculty::addAdvisee(int a) // adds student advisee to doubly linked list
 {
   adviseeIDs->insertBack(a);
 }
 
-ListNode<int>* Faculty::removeAdvisee(int a)
+ListNode<int>* Faculty::removeAdvisee(int a) // remove from doubly linked list
 {
   return adviseeIDs->remove(a);
 }
@@ -44,7 +44,7 @@ int Faculty::getID()
   return ID;
 }
 
-string Faculty::toString()
+string Faculty::toString() // prints out data for a faculty object
 {
   ListNode<int>* curr = adviseeIDs->peek();
   string s = "Name: " + name + "\n"

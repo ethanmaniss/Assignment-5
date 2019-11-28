@@ -18,14 +18,14 @@ class Database
       Database();
       ~Database();
 
-      void start();
-      void getCommand();
+      void start(); // database will start running
+      void getCommand(); // gets user input commands
 
-      void printSInfo();
-      void printFInfo();
-      void printSAInfo();
-      void printFAInfo();
-      void print(int ID, bool t);
+      void printSInfo(); // info for student
+      void printFInfo(); // info for faculty member
+      void printSAInfo(); // info for student's advisor
+      void printFAInfo(); // info for faculty's advisee
+      void print(int ID, bool t); // print info based on only id number
 
       void addStudent();
       void addFaculty();

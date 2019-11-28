@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class STree : public BST<Student*>
+class STree : public BST<Student*> // this specific tree holds student objects
 {
   public:
 
