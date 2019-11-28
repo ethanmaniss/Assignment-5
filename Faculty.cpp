@@ -1,20 +1,27 @@
 #include <iostream>
 #include "Faculty.h"
+#include "ListNode.h"
 
 using namespace std;
 
 Faculty::Faculty()
 {
   Person();
+  ID = 0;
+  name = "";
+  level = "";
   department = "";
   adviseeIDs = new DoublyLinkedList<int>();
 }
 
-Faculty::Faculty(int ID, string n, string l, string d, DoublyLinkedList<int>* a)
+Faculty::Faculty(int ID, string n, string l, string d)
 {
   Person(ID, n, l);
+  this->ID = ID;
+  name = n;
+  level = l;
   department = d;
-  adviseeIDs = a;
+  adviseeIDs = new DoublyLinkedList<int>();
 }
 
 Faculty::~Faculty()
@@ -27,14 +34,27 @@ void Faculty::addAdvisee(int a)
   adviseeIDs->insertBack(a);
 }
 
-void Faculty::removeAdvisee(int a)
+ListNode<int>* Faculty::removeAdvisee(int a)
 {
-  adviseeIDs->remove(a);
+  return adviseeIDs->remove(a);
+}
+
+int Faculty::getID()
+{
+  return ID;
 }
 
 string Faculty::toString()
 {
-  string s = Person::toString() +
-            + "Department: " + department + "\n";
+  ListNode<int>* curr = adviseeIDs->peek();
+  string s = "Name: " + name + "\n"
+            + "ID: " + to_string(ID) + "\n"
+            + "Level: " + level + "\n"
+            + "Department: " + department + "\n"
+            + "Advisees: \n";
+  while (curr != NULL)
+  {
+    s += to_string(curr->data) + "\n";
+  }
   return s;
 }

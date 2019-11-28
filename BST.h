@@ -27,11 +27,10 @@ class BST
         bool isEmpty();
         TreeNode<E>* getMin();
         TreeNode<E>* getMax();
+        TreeNode<E>* getRoot();
         void printTree();
         void recPrint(TreeNode<E> *node);
 };
-
-#endif
 
 template <typename E>
 BST<E>::BST()
@@ -43,6 +42,12 @@ template <typename E>
 BST<E>::~BST()
 {
     delete root;
+}
+
+template<typename E>
+TreeNode<E>* BST<E>::getRoot()
+{
+  return root;
 }
 
 template <typename E>
@@ -103,7 +108,7 @@ template <typename E>
 void BST<E>::insert(E data)
 {
     // check if value exists in tree before proceeding
-    TreeNode<E> node = TreeNode<E>(data);
+    TreeNode<E>* node = new TreeNode<E>(data);
 
     if(root == NULL) // empty tree
     {
@@ -120,7 +125,7 @@ void BST<E>::insert(E data)
         {
             parent = current;
 
-            if(data < current->key)
+            if(data <= current->key)
             {
                 // we go left
                 current = current->left;
@@ -147,14 +152,12 @@ void BST<E>::insert(E data)
 }
 
 template <typename E>
-TreeNode<E>* BST<E>::search(E data) // for assignment 5 will have to return something else (got it)
+TreeNode<E>* BST<E>::search(E data)
 {
     if(root == NULL)
     {
         return NULL;
     }
-    // we make it this far, we know the tree is not empty
-    // lets attempt to find the key
     TreeNode<E> *current = root;
     while(current->key != data)
     {
@@ -300,3 +303,5 @@ TreeNode<E>* BST<E>::getSuccessor(TreeNode<E> *d) //d is the node to be deleted
     }
     return successor;
 }
+
+#endif

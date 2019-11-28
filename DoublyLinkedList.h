@@ -4,6 +4,9 @@
 * Assignment 5
 * DoublyLinkedList template class
 */
+#ifndef DOUBLYLINKEDLIST_H
+#define DOUBLYLINKEDLIST_H
+
 #include "GenLinkedList.h"
 #include <iostream>
 
@@ -33,6 +36,7 @@ class DoublyLinkedList : public GenLinkedList<E>
         void printList();
         unsigned int getSize();
 };
+#endif
 
 // default constructor
 template <typename E>

@@ -10,16 +10,20 @@ using namespace std;
 class Faculty : public Person
 {
     private:
+      int ID;
+      string name;
+      string level;
       string department;
       DoublyLinkedList<int>* adviseeIDs;
 
     public:
       Faculty();
-      Faculty(int ID, string n, string l, string d, DoublyLinkedList<int>* a);
+      Faculty(int ID, string n, string l, string d);
       ~Faculty();
 
       void addAdvisee(int a);
-      void removeAdvisee(int a);
+      ListNode<int>* removeAdvisee(int a);
+      int getID();
       string toString();
 
 };

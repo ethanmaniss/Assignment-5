@@ -6,8 +6,8 @@ using namespace std;
 
 Database::Database()
 {
-  studentTree = new BST<Student*>();
-  facultyTree = new BST<Faculty*>();
+  studentTree = new STree();
+  facultyTree = new FTree();
 }
 
 Database::~Database()
@@ -16,7 +16,7 @@ Database::~Database()
   delete facultyTree;
 }
 
-void Database::start()
+void Database::start() // finds binary files for trees
 {
   getCommand();
 }
@@ -28,7 +28,7 @@ void Database::getCommand()
     bool isOn = true;
     while(isOn)
     {
-      cout << "Please enter number corresponding to command (enter 14 to exit)\n" << endl
+      cout << endl << "Please enter number corresponding to command (enter 14 to exit)\n" << endl
             << "1: Print all students' information" << endl
             << "2: Print all faculty's information" << endl
             << "3: Display student information" << endl
@@ -65,57 +65,43 @@ void Database::getCommand()
       switch(c)
       {
         case 1: // print all students' information
+          studentTree->printTree();
           break;
 
         case 2: // print all faculty's information
+          facultyTree->printTree();
           break;
 
         case 3: // display student information
+          printSInfo();
           break;
 
         case 4: // display faculty information
+          printFInfo();
           break;
 
         case 5: // display student's advisor information
+          printSAInfo();
           break;
 
         case 6: // display faculty's advisee information
+          printFAInfo();
           break;
 
         case 7: // add a new student
-          string n; // new student's name
-          cout << "Enter the name of new student: " << endl;
-          cin >> n;
-          string l; // new student's grade level
-          cout << "Enter " << n << "'s grade level: " << endl;
-          cin >> l;
-          // randomly generate new student's id
-          Student s = new Student(); // generate new student object
-          studentTree.insert(s); // adds a new student object to the tree
-
+          addStudent();
           break;
 
         case 8: // delete a student
-          int n; // student to be deleted id number
-          cout << "Enter student's ID number: " << endl;
-          cin >> n; // gets id number
-
+          deleteStudent();
           break;
 
         case 9: // add new faculty
-          string n; // new faculty name
-          cout << "Enter the name of new faculty member: " << endl;
-          cin >> n;
-          string l; // new faculty level
-          cout << "Enter " << n << "'s level: " << endl;
-          cin >> l;
-          // randomly generate new faculty id
-          Faculty f = new Faculty(); // generate new faculty object
-          facultyTree.insert(f); // adds new faculty object to the tree
-
+          addFaculty();
           break;
 
         case 10: // delete faculty
+          deleteFaculty();
           break;
 
         case 11: // change a student's advisor
@@ -139,31 +125,513 @@ void Database::getCommand()
     }
 }
 
+void Database::printSInfo()
+{
+  string r = "";
+  int i = 0;
+
+  cout << "Enter ID of desired student" << endl;
+  cin >> r;
+
+  try
+  {
+    i = stoi(r);
+  }
+  catch(invalid_argument const &e)
+  {
+    cout << "Error: invalid argument" << endl << endl;
+    return;
+  }
+  catch(out_of_range const &e)
+  {
+    cout << "Error: argument out of range" << endl << endl;
+    return;
+  }
+
+  if (i < 100000 || i > 999999) // ID is invalid
+  {
+    cout << "Error: given ID is invalid" << endl;
+    return;
+  }
+
+  print(i, true);
+}
+
+void Database::printFInfo()
+{
+  string r = "";
+  int i = 0;
+
+  cout << "Enter ID of desired faculty" << endl;
+  cin >> r;
+
+  try
+  {
+    i = stoi(r);
+  }
+  catch(invalid_argument const &e)
+  {
+    cout << "Error: invalid argument" << endl << endl;
+    return;
+  }
+  catch(out_of_range const &e)
+  {
+    cout << endl << "Error: argument out of range" << endl << endl;
+    return;
+  }
+
+  if (i < 100000 || i > 999999) // ID is invalid
+  {
+    cout << "Error: given ID is invalid" << endl;
+    return;
+  }
+
+  print(i, false);
+}
+
+void Database::printSAInfo() // prints student's advisor's information
+{
+  string r = "";
+  int i = 0; // student id
+  int a = 0; // advisor id
+
+  cout << "Enter student's ID" << endl;
+  cin >> r;
+
+  try
+  {
+    i = stoi(r);
+  }
+  catch(invalid_argument const &e)
+  {
+    cout << "Error: invalid argument" << endl << endl;
+    return;
+  }
+  catch(out_of_range const &e)
+  {
+    cout << endl << "Error: argument out of range" << endl << endl;
+    return;
+  }
+  if (i < 100000 || i > 999999)
+  {
+    cout << "Error: given ID is invalid" << endl;
+    return;
+  }
+
+  if(studentTree->contains(i))
+  {
+    TreeNode<Student*>* node = studentTree->search(i);
+    a = node->key->getAdvisor();
+    print(a, false);
+  }
+  else
+  {
+    cout << "Error: Given ID does not exist" << endl;
+    return;
+  }
+}
+
+void Database::printFAInfo()
+{
+  string r = "";
+  int i = 0; // faculty id
+
+  cout << "Enter faculty's ID" << endl;
+  cin >> r;
+
+  try
+  {
+    i = stoi(r);
+  }
+  catch(invalid_argument const &e)
+  {
+    cout << "Error: invalid argument" << endl << endl;
+    return;
+  }
+  catch(out_of_range const &e)
+  {
+    cout << endl << "Error: argument out of range" << endl << endl;
+    return;
+  }
+  if (i < 100000 || i > 999999)
+  {
+    cout << "Error: given ID is invalid" << endl;
+    return;
+  }
+
+  if(facultyTree->contains(i))
+  {
+    TreeNode<Faculty*>* node = facultyTree->search(i);
+  }
+  else
+  {
+    cout << "Error: Given ID does not exist" << endl;
+    return;
+  }
+}
+
+void Database::print(int ID, bool t) // prints specific student or faculty info, bool true = student
+{
+  if(t)
+  {
+    if(studentTree->contains(ID))
+    {
+      TreeNode<Student*>* node = studentTree->search(ID);
+      cout << node->key->toString() << endl;
+    }
+    else
+    {
+      cout << "Error: Student ID does not exist" << endl;
+    }
+  }
+  else
+  {
+    if(facultyTree->contains(ID))
+    {
+      TreeNode<Faculty*>* node = facultyTree->search(ID);
+      cout << node->key->toString() << endl;
+    }
+    else
+    {
+      cout << "Error: Faculty ID does not exist" << endl;
+    }
+  }
+}
+
+void Database::addStudent()
+{
+  string n = ""; // name
+  string l = ""; // level
+  string m = ""; // major
+  string ad = "";
+  int a = 0; // advisor
+  int ID = 0;
+  double g = 0.0; // GPA
+
+
+  cout << "Enter the name of new student: " << endl;
+  cin >> n;
+
+  cout << "Enter " << n << "'s year (Freshman, Sophomore, Junior, Senior): " << endl;
+  cin >> l;
+
+  cout << "Enter the major of " << n << ": " << endl;
+  cin >> m;
+
+  cout << "Enter student's advisor's ID" << endl;
+  cin >> ad;
+  try
+  {
+    a = stoi(ad);
+  }
+  catch(invalid_argument const &e)
+  {
+    cout << "Error: invalid argument" << endl << endl;
+    return;
+  }
+  catch(out_of_range const &e)
+  {
+    cout << "Error: argument out of range" << endl << endl;
+    return;
+  }
+  if(a < 100000 || a > 999999)
+  {
+    cout << "Error: Invalid ID was given" << endl << endl;
+    return;
+  }
+  else if(!facultyTree->contains(a))
+  {
+    cout << "Error: Faculty advisor does not exist" << endl << endl;
+  }
+
+  cout << "Enter student's GPA" << endl;
+  cin >> ad;
+  try
+  {
+    g = stod(ad);
+  }
+  catch(invalid_argument const &e)
+  {
+    cout << "Error: invalid argument" << endl << endl;
+    return;
+  }
+  catch(out_of_range const &e)
+  {
+    cout << "Error: argument out of range" << endl << endl;
+    return;
+  }
+
+  cout << "Enter ID of student (must be 6 numbers)" << endl;
+  cin >> ad;
+  try
+  {
+    ID = stoi(ad);
+  }
+  catch(invalid_argument const &e)
+  {
+    cout << "Error: invalid argument" << endl << endl;
+    return;
+  }
+  catch(out_of_range const &e)
+  {
+    cout << "Error: argument out of range" << endl << endl;
+    return;
+  }
+  if (ID < 100000 || ID > 999999) // id not long enough or too long
+  {
+    cout << "Error: invalid ID" << endl << endl;
+    return;
+  }
+  else if (studentTree->contains(ID)) // id already exists
+  {
+    cout << "Error: ID already exists" << endl << endl;
+    return;
+  }
+
+  // all student info found
+  Student* s = new Student(ID, n, l, g, m, a); // generate new student object
+  studentTree->insert(s); // adds a new student object to the tree
+}
+
+void Database::addFaculty()
+{
+  string n = ""; // name
+  string l = ""; // level
+  string d = ""; // department;
+  string r = "";
+  int ID = 0;
+
+  cout << "Enter the name of new faculty member: " << endl;
+  cin >> n;
+
+  cout << "Enter the department of " << n << endl;
+  cin >> d;
+
+  cout << "Enter " << n << "'s position: " << endl;
+  cin >> l;
+
+  cout << "Enter ID of faculty member (must be 6 digit number)" << endl;
+  cin >> r;
+  try
+  {
+    ID = stoi(r);
+  }
+  catch(invalid_argument const &e)
+  {
+    cout << "Error: invalid argument" << endl << endl;
+    return;
+  }
+  catch(out_of_range const &e)
+  {
+    cout << "Error: argument out of range" << endl << endl;
+    return;
+  }
+  if (ID < 100000 || ID > 999999) // id not long enough or too long
+  {
+    cout << "Error: invalid ID" << endl << endl;
+    return;
+  }
+  else if (facultyTree->contains(ID))
+  {
+    cout << "Error: ID already exists" << endl << endl;
+    return;
+  }
+
+  // randomly generate new faculty id
+  Faculty* f = new Faculty(ID, n, l , d); // generate new faculty object
+  facultyTree->insert(f); // adds new faculty object to the tree
+}
+
 void Database::exit() // saves data of trees and exits
 {
   cout << "Goodbye!" << endl;
 }
 
-void Database::deleteStudent(&Person p)
+void Database::deleteStudent()
 {
-  if(studentTree.search(p) != NULL) // student is found in system
+  string r = "";
+  int i = 0; // student id number
+  cout << "Enter student's ID number: " << endl;
+  cin >> r;
+  try
   {
-    studentTree.delete(p); // delete student
+    i = stoi(r);
   }
-  else
+  catch(invalid_argument const &e)
   {
-    cout << "This student does not exist in our system." << endl;
+    cout << "Error: invalid argument" << endl << endl;
+    return;
+  }
+  catch(out_of_range const &e)
+  {
+    cout << "Error: argument out of range" << endl << endl;
+    return;
+  }
+  if (i < 100000 || i > 999999) // id not long enough or too long
+  {
+    cout << "Error: invalid ID" << endl << endl;
+    return;
+  }
+  if(studentTree->contains(i))
+  {
+    TreeNode<Student*>* node = studentTree->search(i);
+
   }
 }
 
-void Database::deleteFaculty(&Person f)
+void Database::deleteFaculty()
 {
-  if(facultyTree.search(f) != NULL) // faculty is found in system
+  string r = "";
+  int i = 0; // faculty id number
+  cout << "Enter faculty's ID number: " << endl;
+  cin >> r;
+  try
   {
-    facultyTree.delete(f); // delete faculty
+    i = stoi(r);
+  }
+  catch(invalid_argument const &e)
+  {
+    cout << "Error: invalid argument" << endl << endl;
+    return;
+  }
+  catch(out_of_range const &e)
+  {
+    cout << "Error: argument out of range" << endl << endl;
+    return;
+  }
+  if (i < 100000 || i > 999999) // id not long enough or too long
+  {
+    cout << "Error: invalid ID" << endl << endl;
+    return;
+  }
+  if(facultyTree->contains(i))
+  {
+    TreeNode<Faculty*>* node = facultyTree->search(i);
+
+  }
+}
+
+void Database::changeAd() // change student's advisor
+{
+  string r = "";
+  int i = 0; // student id number
+  cout << "Enter student's ID number: " << endl;
+  cin >> r;
+  try
+  {
+    i = stoi(r);
+  }
+  catch(invalid_argument const &e)
+  {
+    cout << "Error: invalid argument" << endl << endl;
+    return;
+  }
+  catch(out_of_range const &e)
+  {
+    cout << "Error: argument out of range" << endl << endl;
+    return;
+  }
+  if (i < 100000 || i > 999999) // id not long enough or too long
+  {
+    cout << "Error: invalid ID" << endl << endl;
+    return;
+  }
+  if(studentTree->contains(i))
+  {
+    TreeNode<Student*>* stu = studentTree->search(i);
+
+    string res = "";
+    int fi = 0; // faculty id number
+
+    cout << "Enter faculty's ID number: " << endl;
+    cin >> res;
+    try
+    {
+      fi = stoi(res);
+    }
+    catch(invalid_argument const &e)
+    {
+      cout << "Error: invalid argument" << endl << endl;
+      return;
+    }
+    catch(out_of_range const &e)
+    {
+      cout << "Error: argument out of range" << endl << endl;
+      return;
+    }
+    if (fi < 100000 || fi > 999999) // id not long enough or too long
+    {
+      cout << "Error: invalid ID" << endl << endl;
+      return;
+    }
+    if(facultyTree->contains(fi))
+    {
+      TreeNode<Faculty*>* fac = facultyTree->search(fi);
+      stu->key->setAdvisor(fi);
+      fac->key->addAdvisee(i);
+    }
   }
   else
   {
-    cout << "This faculty member does not exist in our system." << endl;
+    cout << "Error: ID does not exist" << endl << endl;
+  }
+}
+
+void Database::removeAd() // remove advisee
+{
+  string r = "";
+  int i = 0; // faculty id number
+  cout << "Enter faculty's ID number: " << endl;
+  cin >> r;
+  try
+  {
+    i = stoi(r);
+  }
+  catch(invalid_argument const &e)
+  {
+    cout << "Error: invalid argument" << endl << endl;
+    return;
+  }
+  catch(out_of_range const &e)
+  {
+    cout << "Error: argument out of range" << endl << endl;
+    return;
+  }
+  if (i < 100000 || i > 999999) // id not long enough or too long
+  {
+    cout << "Error: invalid ID" << endl << endl;
+    return;
+  }
+  if(facultyTree->contains(i))
+  {
+    TreeNode<Faculty*>* node = facultyTree->search(i);
+
+    string res = "";
+    int si = 0; // student id number
+    cout << "Enter student's ID number: " << endl;
+    cin >> res;
+    try
+    {
+      si = stoi(res);
+    }
+    catch(invalid_argument const &e)
+    {
+      cout << "Error: invalid argument" << endl << endl;
+      return;
+    }
+    catch(out_of_range const &e)
+    {
+      cout << "Error: argument out of range" << endl << endl;
+      return;
+    }
+    if (si < 100000 || si > 999999) // id not long enough or too long
+    {
+      cout << "Error: invalid ID" << endl << endl;
+      return;
+    }
+    if(studentTree->contains(i))
+    {
+      TreeNode<Student*>* stu = studentTree->search(i);
+    }
   }
 }

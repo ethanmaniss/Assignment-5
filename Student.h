@@ -9,6 +9,9 @@ using namespace std;
 class Student : public Person
 {
     private:
+      int ID;
+      string name;
+      string level;
       double GPA;
       string major;
       int advisor;
@@ -19,6 +22,9 @@ class Student : public Person
       ~Student();
 
       void setAdvisor(int a);
+      int getID();
+      int getAdvisor();
       string toString();
+
 };
 #endif

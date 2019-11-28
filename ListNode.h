@@ -25,7 +25,7 @@ class ListNode
         ~ListNode();
 };
 
-#endif
+
 
 template <typename E>
 ListNode<E>::ListNode() // default constructor
@@ -49,3 +49,4 @@ ListNode<E>::ListNode(E d) // overloaded constructor
     next = NULL; // nullptr
     prev = NULL;
 }
+#endif

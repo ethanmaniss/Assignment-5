@@ -1,7 +1,8 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 #include <iostream>
-#include "BST.h"
+#include "STree.h"
+#include "FTree.h"
 #include "Student.h"
 #include "Faculty.h"
 
@@ -10,8 +11,8 @@ using namespace std;
 class Database
 {
     private:
-    BST<Student*>* studentTree;
-    BST<Faculty*>* facultyTree;
+    STree* studentTree;
+    FTree* facultyTree;
 
     public:
       Database();
@@ -19,11 +20,22 @@ class Database
 
       void start();
       void getCommand();
+
+      void printSInfo();
+      void printFInfo();
+      void printSAInfo();
+      void printFAInfo();
+      void print(int ID, bool t);
+
+      void addStudent();
+      void addFaculty();
+
       void exit();
 
+      void deleteStudent();
+      void deleteFaculty();
 
-      void deletePerson(&Person p);
-      void deleteFaculty(&Person f);
-
+      void changeAd();
+      void removeAd();
 };
 #endif

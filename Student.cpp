@@ -6,6 +6,9 @@ using namespace std;
 Student::Student()
 {
   Person();
+  ID = 0;
+  name = "";
+  level = "";
   GPA = 0.0;
   major = "";
   advisor = 0;
@@ -14,6 +17,9 @@ Student::Student()
 Student::Student(int ID, string n, string l, double GPA, string m, int a)
 {
   Person(ID, n, l);
+  this->ID = ID;
+  name = n;
+  level = l;
   this->GPA = GPA;
   major = m;
   advisor = a;
@@ -29,10 +35,22 @@ void Student::setAdvisor(int a)
   advisor = a;
 }
 
+int Student::getID()
+{
+  return ID;
+}
+
+int Student::getAdvisor()
+{
+  return advisor;
+}
+
 string Student::toString()
 {
-  string s = Person::toString() +
+  string s = "Name: " + name + "\n"
+            + "ID: " + to_string(ID) + "\n"
+            + "Level: " + level + "\n"
             + "Major: " + major + "\n"
-            + "Advisor: " + advisor + "\n";
+            + "Advisor: " + to_string(advisor) + "\n";
   return s;
 }

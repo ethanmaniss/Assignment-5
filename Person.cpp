@@ -30,6 +30,7 @@ int Person::getID()
 string Person::toString()
 {
   string s = "Name: " + name + "\n"
+            + "ID: " + to_string(ID) + "\n"
             + "Level: " + level + "\n";
   return s;
 }
